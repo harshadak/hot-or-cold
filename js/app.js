@@ -1,17 +1,13 @@
 $(document).ready(function(){
 
-	/*var secretNo;
+	var secretNo;
 	var guessNo;
 
 	function secretNum(min, max) {
-		var min = 1,
-			max = 100;
-		var secret = Math.floor(Math.random() * (max - min + 1)) + min;
-		return secret;
-		console.log('secret');
+		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
-	secretNum(1, 100);*/
+	console.log(secretNum(1, 100)); // Works fine even if the function is outside document ready
 
 	
 	/*--- Display information modal box ---*/
@@ -32,5 +28,5 @@ $(document).ready(function(){
 
 function newGame() {
 	document.location.reload(true);
-	//secretNum();
+	secretNum();
 }
