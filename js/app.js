@@ -25,9 +25,7 @@ $(document).ready(function(){
   		$('.overlay').fadeOut(1000);
   	});
 
-  	$('.new').on('click', function(){
-		newGame();
-	});
+  	$('.new').on('click', newGame);
 
 });
 
