@@ -45,7 +45,7 @@ $(document).ready(function(){
         	$('#feedback').text('Game Over!');
         	document.getElementById("userGuess").disabled = true; 
 			document.getElementById("guessButton").disabled = true;
-			alert('The Secret number was ' + secretNo + ' !!');
+			alert('The Secret number was ' + secretNo + ' ! Better luck next time !!');
         }      
         guessCounter(counter);
 	}
