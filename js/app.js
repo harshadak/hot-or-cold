@@ -11,7 +11,6 @@ $(document).ready(function(){
 	}
 
 	secretNo = secretNum(1, 100);
-	console.log(secretNo); // Works fine even if the function is outside document ready
 
 	$('.new').on('click', newGame);
 
@@ -33,18 +32,20 @@ $(document).ready(function(){
 			guessFeedback(secretNo, guessNo);
 		}
 
-		if (guessNo != '') {
+		if (guessNo != '' && guessNo <= 100) {
             guessFeedback(secretNo, guessNo);
             counter--;
             guessHistory();
             $('#userGuess').val('');
         } else {
         	alert('Please guess a number between 1 to 100!!');
+        	$('#userGuess').val('');
         }
         if (counter <= 0) {
         	$('#feedback').text('Game Over!');
         	document.getElementById("userGuess").disabled = true; 
 			document.getElementById("guessButton").disabled = true;
+			alert('The Secret number was ' + secretNo + ' !!');
         }      
         guessCounter(counter);
 	}
