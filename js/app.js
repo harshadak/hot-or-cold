@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 	// Variables created for the random number and the user's guess number
 	var secretNo;
-	var counter = 0;
+	var counter = 10;
 
 	// Function to generate the random number
 	function secretNum(min, max) {
@@ -35,12 +35,17 @@ $(document).ready(function(){
 
 		if (guessNo != '') {
             guessFeedback(secretNo, guessNo);
-            counter++;
+            counter--;
             guessHistory();
             $('#userGuess').val('');
         } else {
         	alert('Please guess a number between 1 to 100!!');
-        }        
+        }
+        if (counter <= 0) {
+        	$('#feedback').text('Game Over!');
+        	document.getElementById("userGuess").disabled = true; 
+			document.getElementById("guessButton").disabled = true;
+        }      
         guessCounter(counter);
 	}
 
@@ -89,8 +94,9 @@ function guessFeedback(secretNo, guessNo) {
 		$('#feedback').text('Very Hot!!');
 	} else {
 		$('#feedback').text('Bingo! You got it right!!');
+		document.getElementById("userGuess").disabled = true; 
+		document.getElementById("guessButton").disabled = true;
 	}
-	return;
 }
 
 // Function to count the number of guesses
@@ -102,10 +108,3 @@ function guessCounter(counter) {
 function guessHistory() {
 	$('#guessList').append('<li>' + parseInt($('#userGuess').val(), 10) + '</li>');
 }
-
-	
-
-
-
-
-
