@@ -1,13 +1,10 @@
 $(document).ready(function(){
 
-	// Variables created for the random number and the user's guess number.
-
+	// Variables created for the random number and the user's guess number
 	var secretNo;
 	var counter = 0;
-	
 
-	// Function to generate the random number.
-
+	// Function to generate the random number
 	function secretNum(min, max) {
 		secretNo = Math.floor(Math.random() * (max - min + 1)) + min;
 		return secretNo;
@@ -18,18 +15,48 @@ $(document).ready(function(){
 
 	$('.new').on('click', newGame);
 
-	// $('#guessButton').on('click', guessFeedback(secretNo, guessNo));
-	$('#guessButton').on('click', function () {
-		var guessNo = $('#userGuess').val();
+	// Function to implement a simple validation of the iser input
+	function validation() {
+		var guessNo = parseInt($('#userGuess').val(), 10);
+		if (guessNo % 1 !== 0)
+		{
+			alert('You must enter an integer value!!');
+			$('#userGuess').val('');
+			return false;
+		}
+		else if (guessNo < 1) {
+			alert('The number should be greater than one!');
+			$('#userGuess').val('');
+			return false;
+		} 
+		else {
+			guessFeedback(secretNo, guessNo);
+		}
+
 		if (guessNo != '') {
             guessFeedback(secretNo, guessNo);
             counter++;
             guessHistory();
+            $('#userGuess').val('');
         } else {
         	alert('Please guess a number between 1 to 100!!');
         }        
-        guessCounter(counter);       
+        guessCounter(counter);
+	}
+
+	$('#guessButton').on('click', function () {
+		// var guessNo = parseInt($('#userGuess').val(), 10);
+		validation();       
     });
+
+	// This block was repetitious. I used function validation.
+    $('#userGuess').on('keypress', function(e){
+    	// var guessNo = parseInt($('#userGuess').val(), 10);
+    	if (e.which == 13) {
+    		validation();
+    	}
+    });
+
 	// Display information modal box
   	$('.what').click(function(){
     	$('.overlay').fadeIn(1000);
@@ -43,11 +70,11 @@ $(document).ready(function(){
 });
 
 // Function to start a new game
-
 function newGame() {
 	document.location.reload(true);
 }
 
+// Function to provide feedback to the user
 function guessFeedback(secretNo, guessNo) {
 	var difference = Math.abs(secretNo - guessNo);
 	if (difference >= 50) {
@@ -63,14 +90,17 @@ function guessFeedback(secretNo, guessNo) {
 	} else {
 		$('#feedback').text('Bingo! You got it right!!');
 	}
+	return;
 }
 
+// Function to count the number of guesses
 function guessCounter(counter) {
 	$('#count').text(counter);
 }
 
+// Function to show the history of guesses
 function guessHistory() {
-	$('#guessList').append('<li>' + $('#userGuess').val() + '</li>');
+	$('#guessList').append('<li>' + parseInt($('#userGuess').val(), 10) + '</li>');
 }
 
 	
