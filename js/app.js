@@ -1,9 +1,11 @@
 $(document).ready(function(){
 
-	// Variables created for the random number and the user's guess number
 	var secretNo;
+	var guessNo = parseInt($('#userGuess').val(), 10);
+	var newGuess = parseInt(guessNo);
+	var oldGuess = 0;
 	var counter = 10;
-
+	
 	// Function to generate the random number
 	function secretNum(min, max) {
 		secretNo = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -15,8 +17,7 @@ $(document).ready(function(){
 	$('.new').on('click', newGame);
 
 	// Function to implement a simple validation of the iser input
-	function validation() {
-		var guessNo = parseInt($('#userGuess').val(), 10);
+	function validation(guessNo) {
 		if (guessNo % 1 !== 0)
 		{
 			alert('You must enter an integer value!!');
@@ -50,16 +51,25 @@ $(document).ready(function(){
         guessCounter(counter);
 	}
 
-	$('#guessButton').on('click', function () {
-		// var guessNo = parseInt($('#userGuess').val(), 10);
-		validation();       
+	$('#guessButton').on('click', function() { // if variables are given as parameters, it doesn't work
+		var guessNo = parseInt($('#userGuess').val(), 10);
+		var newGuess = parseInt(guessNo);
+		validation(guessNo); 
+		if (oldGuess !== 0 && guessNo >= 1 && guessNo <= 100) {
+				relativeFeedback(secretNo, oldGuess, newGuess);
+			}
+		oldGuess = newGuess;     
     });
 
-	// This block was repetitious. I used function validation.
-    $('#userGuess').on('keypress', function(e){
-    	// var guessNo = parseInt($('#userGuess').val(), 10);
+    $('#userGuess').on('keypress', function(e){ // if variables are given as parameters, it doesn't work
+    	var guessNo = parseInt($('#userGuess').val(), 10);
+		var newGuess = parseInt(guessNo);
     	if (e.which == 13) {
-    		validation();
+    		validation(guessNo);
+    		if (oldGuess !== 0 && guessNo >= 1 && guessNo <= 100) {
+				relativeFeedback(secretNo, oldGuess, newGuess);
+			}
+    		oldGuess = newGuess;
     	}
     });
 
@@ -100,6 +110,19 @@ function guessFeedback(secretNo, guessNo) {
 	}
 }
 
+// Function to provide relative feedback to the user
+function relativeFeedback(secretNo, oldGuess, newGuess) {
+	var oldDiff = parseInt(Math.abs(secretNo - oldGuess));
+	var newDiff = parseInt(Math.abs(secretNo - newGuess));
+	if (newDiff > oldDiff) {
+		$('#relative-feedback').text('You are colder than last time!');
+	} else if (newDiff == oldDiff) {
+		$('#relative-feedback').text('You are at the same distance!');
+	} else {
+		$('#relative-feedback').text('You are hotter than last time!');
+	}
+}
+
 // Function to count the number of guesses
 function guessCounter(counter) {
 	$('#count').text(counter);
@@ -109,3 +132,5 @@ function guessCounter(counter) {
 function guessHistory() {
 	$('#guessList').append('<li>' + parseInt($('#userGuess').val(), 10) + '</li>');
 }
+
+
