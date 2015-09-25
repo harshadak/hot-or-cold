@@ -13,7 +13,6 @@ $(document).ready(function(){
 	}
 
 	secretNo = secretNum(1, 100);
-	console.log(secretNo);
 
 	$('.new').on('click', newGame);
 
