@@ -13,6 +13,7 @@ $(document).ready(function(){
 	}
 
 	secretNo = secretNum(1, 100);
+	console.log(secretNo);
 
 	$('.new').on('click', newGame);
 
@@ -24,8 +25,8 @@ $(document).ready(function(){
 			$('#userGuess').val('');
 			return false;
 		}
-		else if (guessNo < 1) {
-			alert('The number should be greater than one!');
+		else if (guessNo < 1 || guessNo > 100) {
+			alert('Please guess a number between 1 to 100!!');
 			$('#userGuess').val('');
 			return false;
 		} 
@@ -115,11 +116,11 @@ function relativeFeedback(secretNo, oldGuess, newGuess) {
 	var oldDiff = parseInt(Math.abs(secretNo - oldGuess));
 	var newDiff = parseInt(Math.abs(secretNo - newGuess));
 	if (newDiff > oldDiff) {
-		$('#relative-feedback').text('You are colder than last time!');
+		$('#relative-feedback').text('You are colder than the last guess!');
 	} else if (newDiff == oldDiff) {
-		$('#relative-feedback').text('You are at the same distance!');
+		$('#relative-feedback').text('You are as far as your previous guess!');
 	} else {
-		$('#relative-feedback').text('You are hotter than last time!');
+		$('#relative-feedback').text('You are hotter than the last guess!');
 	}
 }
 
